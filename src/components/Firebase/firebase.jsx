@@ -3,12 +3,7 @@ import 'firebase/auth';
 import 'firebase/database';
 
 const config = {
-  apiKey: "AIzaSyCW40112DBUJ5Z4mQLSj0XoRWP0brIOn_g",
-  authDomain: "attendanceapp-3d480.firebaseapp.com",
-  databaseURL: "https://attendanceapp-3d480.firebaseio.com",
-  projectId: "attendanceapp-3d480",
-  storageBucket: "attendanceapp-3d480.appspot.com",
-  messagingSenderId: "528032982018"
+
 };
 
 class Firebase {

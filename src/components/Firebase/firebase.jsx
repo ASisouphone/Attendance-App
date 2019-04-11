@@ -3,7 +3,7 @@ import 'firebase/auth';
 import 'firebase/database';
 
 const config = {
-
+  //place key from firebase api here
 };
 
 class Firebase {

@@ -1,6 +1,7 @@
 import React, { Component, useCallback } from 'react';
 import { compose } from 'recompose';
 import { withFirebase } from '../Firebase';
+import OrgList from '../OrgList';
 
 class Landing extends Component {
 
@@ -47,13 +48,14 @@ class Landing extends Component {
         <h1>GVSU Attendnace</h1>
         <p>A better way to track attendance for your organization</p>
         <AddOrgForm />
-        <ul>
+        <OrgList orgList={orgList} />
+        {/* <ul>
           {orgList.map(org => (
             <li key={org.orgId}>
               <span>{org.orgName}</span>
             </li>
           ))}
-        </ul>
+        </ul> */}
       </div>
 
     )

@@ -9,6 +9,7 @@ const AccountPage = () => (
     {authUser => (
       <div>
         <h1>Account: {authUser.email}</h1>
+        <h2>{localStorage.getItem("userId")}</h2>
         <PasswordForgetForm />
         <PasswordChangeForm />
       </div>

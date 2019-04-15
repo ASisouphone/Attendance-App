@@ -1,14 +1,64 @@
-import React, { Component } from 'react';
+import React, { Component, useCallback } from 'react';
 import { compose } from 'recompose';
 import { withFirebase } from '../Firebase';
 
-const Landing = () => (
-  <div>
-    <h1>GVSU Attendnace</h1>
-    <p>A better way to track attendance for your organization</p>
-    <AddOrgForm />
-  </div>
-);
+class Landing extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      loading: false,
+      orgList: []
+    }
+  }
+
+  componentDidMount() {
+    this.setState({ loading: true });
+
+    this.props.firebase.organizations().on('value', snapshot => {
+      const orgListObj = snapshot.val();
+
+      // Move ID inside org object
+      const orgList = Object.keys(orgListObj).map(key => ({
+        ...orgListObj[key],
+        orgId: key
+      }))
+
+      this.setState({
+        orgList: orgList,
+        loading: false
+      })
+
+    })
+  }
+
+  componentWillUnmount() {
+    this.props.firebase.organizations().off();
+  }
+
+  render() {
+
+    const { orgList, loading } = this.state;
+    console.log(orgList);
+
+    return (
+      <div>
+        <h1>GVSU Attendnace</h1>
+        <p>A better way to track attendance for your organization</p>
+        <AddOrgForm />
+        <ul>
+          {orgList.map(org => (
+            <li key={org.orgId}>
+              <span>{org.orgName}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+    )
+  }
+}
 
 const INITIAL_STATE = {
   orgName: ''
@@ -22,7 +72,6 @@ class AddOrgFormBase extends Component {
   }
 
   onSubmit = event => {
-
     const { orgName } = this.state;
 
     this.props.firebase.organizations().push({
@@ -43,15 +92,12 @@ class AddOrgFormBase extends Component {
 
   render() {
     const { orgName } = this.state;
-
     const isInvalid = orgName === '';
 
     return (
       <form onSubmit={this.onSubmit}>
         <input name="orgName" value={orgName} onChange={this.onChange} type="text" />
-
         <button disabled={isInvalid} type="submit">Add Org</button>
-
       </form>
     );
   }
@@ -59,6 +105,6 @@ class AddOrgFormBase extends Component {
 
 const AddOrgForm = compose(withFirebase)(AddOrgFormBase);
 
-export default Landing;
+export default withFirebase(Landing);
 
 export { AddOrgForm }

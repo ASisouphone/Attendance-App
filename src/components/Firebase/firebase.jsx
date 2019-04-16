@@ -41,6 +41,8 @@ class Firebase {
   meetingsByOrg = orgId => this.db.ref(`meetings/${orgId}`);
 
   orgMembers = orgId => this.db.ref(`members/${orgId}`);
+
+  meetingAttendees = (orgId,meetId) => this.db.ref(`meetingAttendees/${orgId}/${meetId}`)
 }
 
 export default Firebase;

@@ -71,6 +71,7 @@ class Landing extends Component {
   }
 
   componentWillUnmount() {
+    this.props.firebase.user(localStorage.getItem("userId")).off();
     this.props.firebase.organizations().off();
   }
 

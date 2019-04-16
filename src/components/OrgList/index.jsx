@@ -24,12 +24,12 @@ class OrgList extends Component {
                 {orgList.map(org => (
                     <Card key={org.orgId}>
                         <CardActionArea onClick={this.props.link ?()=> this.props.link(org.orgId): undefined }>
-                            <CardMedia
+                            {/* <CardMedia
                                 component="img"
                                 alt="Cat"
                                 image="https://placekitten.com/200/100"
                                 title="Cat"
-                            />
+                            /> */}
                             <CardContent>
                                 <Typography gutterBottom variant="h5" component="h2">
                                     {org.orgName}

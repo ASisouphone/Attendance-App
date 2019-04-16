@@ -38,7 +38,16 @@ class MeetingsPage extends Component {
     }
 
     componentWillUnmount() {
-        this.props.firebase.meetings().off();
+        const orgId = this.props.match.params.orgId;
+        this.props.firebase.meetings().child(orgId).off();
+    }
+
+    goToAttendance = (meetId) => {
+        this.props.history.push(this.props.match.url + "/attendance/" + meetId);
+    }
+
+    goBack = () => {
+        this.props.history.goBack();
     }
 
 
@@ -49,11 +58,12 @@ class MeetingsPage extends Component {
         return (
             <div>
                 <h1>MeetingsPage</h1>
-                <span>{this.props.match.params.orgId}</span>
+                <button onClick={this.goBack}>Go Back</button>
+                {/* <span>{this.props.match.params.orgId}</span> */}
                 <AddMeetingForm />
                 <hr/>
                 {/* {meetingList.map(meeting => (<li key={meeting.meetId}>{meeting.name}</li>))} */}
-                <MeetingList meetingList={meetingList}></MeetingList>
+                <MeetingList meetingList={meetingList} link={this.goToAttendance}></MeetingList>
             </div>
 
         )

@@ -19,6 +19,7 @@ import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import MeetingsPage from '../Meetings';
+import AttendancePage from '../Attendance';
 
 const App = () => (
   <Router>
@@ -44,6 +45,7 @@ const App = () => (
       <Route exact path={ROUTES.ACCOUNT} component={AccountPage} />
       <Route exact path={ROUTES.ADMIN} component={AdminPage} />
       <Route exact path={ROUTES.MEETINGS + "/:orgId"} component = {MeetingsPage} />
+      <Route exact path={ROUTES.ATTENDANCE} component = {AttendancePage} />
     </div>
   </Router>
 );

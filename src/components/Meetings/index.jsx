@@ -3,6 +3,7 @@ import { compose } from 'recompose';
 import { withFirebase } from '../Firebase';
 import { withAuthorization } from '../Session';
 import { withRouter } from 'react-router-dom';
+import MeetingList from '../MeetingList';
 
 class MeetingsPage extends Component {
 
@@ -51,7 +52,8 @@ class MeetingsPage extends Component {
                 <span>{this.props.match.params.orgId}</span>
                 <AddMeetingForm />
                 <hr/>
-                {meetingList.map(meeting => (<li key={meeting.meetId}>{meeting.name}</li>))}
+                {/* {meetingList.map(meeting => (<li key={meeting.meetId}>{meeting.name}</li>))} */}
+                <MeetingList meetingList={meetingList}></MeetingList>
             </div>
 
         )

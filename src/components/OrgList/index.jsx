@@ -23,7 +23,7 @@ class OrgList extends Component {
             <div className="grid">
                 {orgList.map(org => (
                     <Card key={org.orgId}>
-                        <CardActionArea>
+                        <CardActionArea onClick={this.props.link ?()=> this.props.link(org.orgId): undefined }>
                             <CardMedia
                                 component="img"
                                 alt="Cat"
@@ -38,13 +38,13 @@ class OrgList extends Component {
                         </CardActionArea>
                         <CardActions>
                             {this.props.add &&
-                                <Button size="small" color="primary" onClick={() => this.props.add(org)}>
-                                    Add
+                                <Button color="primary" onClick={() => this.props.add(org)}>
+                                    Join
                              </Button>
                             }
                             {this.props.remove &&
-                                <Button size="small" color="primary" onClick={() => this.props.remove(org.orgId)}>
-                                    Delete
+                                <Button color="primary" onClick={() => this.props.remove(org.orgId)}>
+                                    Leave
                              </Button>
                             }
                         </CardActions>

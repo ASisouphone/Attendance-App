@@ -1,7 +1,10 @@
 import React, { Component, useCallback } from 'react';
 import { compose } from 'recompose';
 import { withFirebase } from '../Firebase';
+import { withAuthorization } from '../Session';
+import { withRouter } from 'react-router-dom';
 import OrgList from '../OrgList';
+import * as ROUTES from '../../constants/routes';
 
 class Landing extends Component {
 
@@ -57,6 +60,10 @@ class Landing extends Component {
     this.props.firebase.organizations().off();
   }
 
+  goToMeetings = orgId => {
+    this.props.history.push(ROUTES.MEETINGS + "/" + orgId)
+  }
+
   removeFromMyOrgs = orgId => {
     console.log(orgId);
     // this.props.firebase.organizations().child(orgId).set(null);
@@ -105,13 +112,14 @@ class Landing extends Component {
         <p>A better way to track attendance for your organization</p>
         <AddOrgForm />
         <h1>My Orgs</h1>
-        <OrgList orgList={myOrgs} remove={this.removeFromMyOrgs}/>
+        <OrgList orgList={myOrgs} remove={this.removeFromMyOrgs} link={this.goToMeetings}/>
         <h1>All Organizations</h1>
         <OrgList orgList={filteredOrgs} add={this.addToMyOrgs}/>
       </div>
 
     )
   }
+
 }
 
 const INITIAL_STATE = {
@@ -159,6 +167,15 @@ class AddOrgFormBase extends Component {
 
 const AddOrgForm = compose(withFirebase)(AddOrgFormBase);
 
-export default withFirebase(Landing);
+
+const condition = authUser => !!authUser;
+
+  Landing = compose(
+    withFirebase,
+    withRouter,
+    withAuthorization(condition))(Landing)
+
+
+export default Landing;
 
 export { AddOrgForm }

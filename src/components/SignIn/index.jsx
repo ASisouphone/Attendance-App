@@ -37,7 +37,7 @@ class SignInFormBase extends Component {
       .then((authUser) => {
         localStorage.setItem("userId", authUser.user.uid);
         this.setState({ ...INITIAL_STATE });
-        this.props.history.push(ROUTES.HOME);
+        this.props.history.push(ROUTES.LANDING);
       })
       .catch(error => {
         this.setState({ error });

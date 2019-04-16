@@ -35,6 +35,10 @@ class Firebase {
   users = () => this.db.ref('users');
 
   organizations = () => this.db.ref('organizations');
+
+  meetings = () => this.db.ref('meetings');
+
+  meetingsByOrg = orgId => this.db.ref(`meetings/${orgId}`);
 }
 
 export default Firebase;

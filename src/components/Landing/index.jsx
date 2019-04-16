@@ -12,6 +12,10 @@ class Landing extends Component {
     super(props);
 
     this.state = {
+      currUser: {
+        name: '',
+        email: ''
+      },
       loading: false,
       orgList: [],
       myOrgs: []
@@ -21,8 +25,14 @@ class Landing extends Component {
   componentDidMount() {
     this.setState({ loading: true });
 
-    this.props.firebase.userOrgs(localStorage.getItem("userId")).on('value', snapshot => {
-      const myOrgObj = snapshot.val();
+    this.props.firebase.user(localStorage.getItem("userId")).on('value', snapshot => {
+
+      const tempCurrUser = {
+        name: snapshot.val().username,
+        email: snapshot.val().email
+      }
+
+      const myOrgObj = snapshot.val().organizations;
 
       var myOrgList = []
 
@@ -32,8 +42,9 @@ class Landing extends Component {
           orgId: key
         }))
       }
-      
+
       this.setState({
+        currUser: tempCurrUser,
         myOrgs: myOrgList,
       })
 
@@ -54,6 +65,9 @@ class Landing extends Component {
       })
 
     })
+
+    // this.props.firebase.user(localStorage.getItem("userId")).once('value', snapshot=> {
+    // })
   }
 
   componentWillUnmount() {
@@ -65,29 +79,34 @@ class Landing extends Component {
   }
 
   removeFromMyOrgs = orgId => {
-    console.log(orgId);
     // this.props.firebase.organizations().child(orgId).set(null);
     this.props.firebase
       .userOrgs(localStorage.getItem("userId"))
       .child(orgId)
       .set(null);
+
+      this.props.firebase
+      .orgMembers(orgId)
+      .child(localStorage.getItem("userId"))
+      .set(null);
   }
 
   addToMyOrgs = org => {
-    console.log(org);
-    let { orgId, ...other} = org;
+    let { orgId, ...other } = org; //...other is org info
 
-        this.props.firebase
-            .userOrgs(localStorage.getItem("userId"))
-            .child(orgId)
-            .set({...other});
+    this.props.firebase
+      .userOrgs(localStorage.getItem("userId"))
+      .child(orgId)
+      .set({ ...other });
+
+    this.props.firebase
+      .orgMembers(orgId)
+      .child(localStorage.getItem("userId"))
+      .set(this.state.currUser);
   }
 
   render() {
-
-    const { orgList, myOrgs, loading } = this.state;
-    console.log("All Orgs!", orgList);
-    console.log("My Orgs!", myOrgs);
+    const { orgList, myOrgs, loading, currUser } = this.state;
 
     var filteredOrgs = orgList;
 
@@ -95,9 +114,9 @@ class Landing extends Component {
     if (orgList.length > 0 && myOrgs.length > 0) {
 
       // List of orgs user is not in
-      filteredOrgs = orgList.filter(x=>{
+      filteredOrgs = orgList.filter(x => {
         let notFound = true;
-        myOrgs.forEach(y=>{
+        myOrgs.forEach(y => {
           if (x.orgId == y.orgId) {
             notFound = false;
           }
@@ -112,9 +131,9 @@ class Landing extends Component {
         <p>A better way to track attendance for your organization</p>
         <AddOrgForm />
         <h1>My Orgs</h1>
-        <OrgList orgList={myOrgs} remove={this.removeFromMyOrgs} link={this.goToMeetings}/>
+        <OrgList orgList={myOrgs} remove={this.removeFromMyOrgs} link={this.goToMeetings} />
         <h1>All Organizations</h1>
-        <OrgList orgList={filteredOrgs} add={this.addToMyOrgs}/>
+        <OrgList orgList={filteredOrgs} add={this.addToMyOrgs} />
       </div>
 
     )
@@ -170,10 +189,10 @@ const AddOrgForm = compose(withFirebase)(AddOrgFormBase);
 
 const condition = authUser => !!authUser;
 
-  Landing = compose(
-    withFirebase,
-    withRouter,
-    withAuthorization(condition))(Landing)
+Landing = compose(
+  withFirebase,
+  withRouter,
+  withAuthorization(condition))(Landing)
 
 
 export default Landing;

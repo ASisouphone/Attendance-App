@@ -4,6 +4,12 @@ import 'firebase/database';
 
 const config = {
   //place key from firebase api here
+  apiKey: "AIzaSyARCwgVKBLNPwgPGaE1LTYbJdOxcoWWIFk",
+  authDomain: "gvsu-attendence.firebaseapp.com",
+  databaseURL: "https://gvsu-attendence.firebaseio.com",
+  projectId: "gvsu-attendence",
+  storageBucket: "gvsu-attendence.appspot.com",
+  messagingSenderId: "472511270208"
 };
 
 class Firebase {

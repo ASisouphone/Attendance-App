@@ -25,7 +25,7 @@ const NavigationAuth = () => (
         <Typography variant="title" color="inherit">GVSU Organization</Typography>
         <Button color="inherit" component={Link} to="/Landing" style={{marginLeft: 'auto'}} >Landing</Button>
         <Button color="inherit" component={Link} to="/Home">Home</Button>
-        <Button color="inherit" component={Link} to="/Accoung">Account</Button>
+        <Button color="inherit" component={Link} to="/Account">Account</Button>
         <Button color="inherit" component={Link} to="/Admin">Admin</Button>
         <SignOutButton />
       </Toolbar>

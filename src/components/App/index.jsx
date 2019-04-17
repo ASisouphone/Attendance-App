@@ -15,24 +15,14 @@ import AdminPage from '../Admin';
 
 import * as ROUTES from '../../constants/routes';
 import { withAuthentication } from '../Session';
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
+
 import MeetingsPage from '../Meetings';
 import AttendancePage from '../Attendance';
 
 const App = () => (
   <Router>
     <div>
-    <AppBar position="static">
-            <Toolbar>
-                <Typography variant="title" color="inherit">
-                GVSU Organizations
-                </Typography>
-            </Toolbar>
-      </AppBar>
       <Navigation></Navigation>
-      <hr></hr>
       <Route exact path={ROUTES.LANDING} component={LandingPage} />
       <Route exact path={ROUTES.SIGN_UP} component={SignUpPage} />
       <Route exact path={ROUTES.SIGN_IN} component={SignInPage} />

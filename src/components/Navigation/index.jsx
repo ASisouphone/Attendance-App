@@ -24,7 +24,7 @@ const NavigationAuth = () => (
       <Toolbar>
         <Typography variant="title" color="inherit">GVSU Organization</Typography>
         <Button color="inherit" component={Link} to="/Landing" style={{marginLeft: 'auto'}} >Landing</Button>
-        <Button color="inherit" component={Link} to="/Home">Home</Button>
+        <Button color="inherit" component={Link} to="/">Home</Button>
         <Button color="inherit" component={Link} to="/Account">Account</Button>
         <Button color="inherit" component={Link} to="/Admin">Admin</Button>
         <SignOutButton />
@@ -38,7 +38,7 @@ const NavigationNonAuth = () => (
     <AppBar position="static">
       <Toolbar>
         <Typography variant="title" color="inherit">GVSU Organization</Typography>
-        <Button color="inherit" component={Link} to="/Home" style={{marginLeft: 'auto'}} >Home</Button>
+        <Button color="inherit" component={Link} to="/" style={{marginLeft: 'auto'}} >Home</Button>
         <Button color="inherit" component={Link} to="/signin">Sign In</Button>
       </Toolbar>
     </AppBar>

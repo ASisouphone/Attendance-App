@@ -2,8 +2,9 @@ import React from 'react';
 
 const HomePage = () => (
   <div>
-    <h1>Home Page</h1>
-    <p>The Home Page is accessible by every everyone.</p>
+    <h1>Welcome To GVSU Campus Organization</h1>
+    <p>GVSU Attendance
+A better way to manage attendance for your oganization</p>
   </div>
 );
 

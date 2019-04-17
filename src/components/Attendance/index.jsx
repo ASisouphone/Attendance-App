@@ -4,7 +4,8 @@ import { withFirebase } from '../Firebase';
 import { withAuthorization } from '../Session';
 import { withRouter } from 'react-router-dom';
 import AttendanceList from '../AttendanceList';
-
+import { Button, TextField, Grid } from '@material-ui/core';
+import './attendance.css';
 
 class AttendancePage extends Component {
     constructor(props) {
@@ -12,7 +13,7 @@ class AttendancePage extends Component {
 
         this.state = {
             markedMembers: [],
-            currMembers: []
+            currMembers: [],
         }
     }
 
@@ -112,16 +113,22 @@ class AttendancePage extends Component {
         }
 
         return (
-            <div>
-                <h1>Attendance Page</h1>
-                <button onClick={this.goBack}>Back</button>
-                <AddMemberForm />
+            <div className="content-wrapper">
+                <AddMemberForm /> <br />
+                <Button variant="outlined" color="primary" onClick={this.goBack}>Go Back</Button>
+                <h1>Attendance</h1>
 
-                <h1>Current Members</h1>
-                <AttendanceList memberList={fitleredMembers} mark={this.markMember} />
+                <Grid container spacing={24}>
+                    <Grid item xs={12} sm={6}>
+                        <h2>Current Members</h2>
+                        <AttendanceList memberList={fitleredMembers} mark={this.markMember} />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <h2>Marked Members</h2>
+                        <AttendanceList memberList={markedMembers} unmark={this.unmarkMember} />
+                    </Grid>
+                </Grid>
 
-                <h1>Marked Members</h1>
-                <AttendanceList memberList={markedMembers} unmark={this.unmarkMember} />
 
             </div>
         )
@@ -170,9 +177,9 @@ class AddMemberFormBase extends Component {
 
         return (
             <form onSubmit={this.onSubmit}>
-                <input name="name" value={name} onChange={this.onChange} type="text" placeholder="Member Name" />
-                <input name="email" value={email} onChange={this.onChange} type="text" placeholder="Member Email" />
-                <button disabled={isInvalid} type="submit">Add Member</button>
+                <TextField name="name" value={name} onChange={this.onChange} type="text" placeholder="Member Name" /> &nbsp;
+                <TextField name="email" value={email} onChange={this.onChange} type="text" placeholder="Member Email" />&nbsp;
+                <Button variant="contained" color="primary" disabled={isInvalid} type="submit">Add Member</Button>
             </form>
         );
     }

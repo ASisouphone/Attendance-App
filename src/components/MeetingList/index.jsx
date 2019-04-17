@@ -11,10 +11,10 @@ import { Button } from '@material-ui/core';
 
 const MeetingList = ({ meetingList, link, remove }) => {
     return (
-        <Grid container>
+        <Grid container spacing={16}>
             {meetingList.map(meeting => (
                 <Grid item xs={12} sm={7} key={meeting.meetId}>
-                    <Paper style={{ marginBottom: '1em' }}>
+                    <Paper>
                             <ListItem>
                         <CardActionArea onClick={link ? ()=> link(meeting.meetId) : ()=>{}}>
                                 <ListItemText primary={meeting.name} secondary="Jan 9, 2014" />

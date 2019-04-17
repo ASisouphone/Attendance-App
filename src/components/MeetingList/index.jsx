@@ -6,19 +6,21 @@ import Paper from '@material-ui/core/Paper';
 import './meetingList.css';
 import Grid from '@material-ui/core/Grid';
 import CardActionArea from '@material-ui/core/CardActionArea';
+import { Button } from '@material-ui/core';
 
 
-const MeetingList = ({ meetingList, link }) => {
+const MeetingList = ({ meetingList, link, remove }) => {
     return (
         <Grid container>
             {meetingList.map(meeting => (
                 <Grid item xs={12} sm={7} key={meeting.meetId}>
-                    <Paper style={{ margin: '0.5em' }}>
-                        <CardActionArea onClick={link ? ()=> link(meeting.meetId) : ()=>{}}>
+                    <Paper style={{ marginBottom: '1em' }}>
                             <ListItem>
+                        <CardActionArea onClick={link ? ()=> link(meeting.meetId) : ()=>{}}>
                                 <ListItemText primary={meeting.name} secondary="Jan 9, 2014" />
-                            </ListItem>
                         </CardActionArea>
+                                <Button onClick={()=>remove(meeting)}>Delete</Button>
+                            </ListItem>
                     </Paper>
                 </Grid>
             ))}

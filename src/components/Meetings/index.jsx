@@ -4,6 +4,9 @@ import { withFirebase } from '../Firebase';
 import { withAuthorization } from '../Session';
 import { withRouter } from 'react-router-dom';
 import MeetingList from '../MeetingList';
+import './meetings.css';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
 class MeetingsPage extends Component {
 
@@ -50,20 +53,26 @@ class MeetingsPage extends Component {
         this.props.history.goBack();
     }
 
+    remove = (meeting) => {
+        const orgId = this.props.match.params.orgId;
+        this.props.firebase.meetingsByOrg(orgId)
+            .child(meeting.meetId)
+            .set(null);
+
+        this.props.firebase.meetingAttendees(orgId, meeting.meetId).set(null);
+    }
+
 
     render() {
 
         const { meetingList } = this.state;
 
         return (
-            <div>
-                <h1>MeetingsPage</h1>
-                <button onClick={this.goBack}>Go Back</button>
-                {/* <span>{this.props.match.params.orgId}</span> */}
-                <AddMeetingForm />
-                <hr/>
-                {/* {meetingList.map(meeting => (<li key={meeting.meetId}>{meeting.name}</li>))} */}
-                <MeetingList meetingList={meetingList} link={this.goToAttendance}></MeetingList>
+            <div className="content-wrapper">
+                <AddMeetingForm /> <br/>
+                <Button variant="outlined" color="primary" onClick={this.goBack}>Go Back</Button>
+                <h1>Meetings</h1>
+                <MeetingList meetingList={meetingList} link={this.goToAttendance} remove={this.remove}></MeetingList>
             </div>
 
         )
@@ -108,8 +117,8 @@ class AddMeetingFormBase extends Component {
 
         return (
             <form onSubmit={this.onSubmit}>
-                <input name="name" value={name} onChange={this.onChange} type="text" />
-                <button disabled={isInvalid} type="submit">Add Meeting</button>
+                <TextField name="name" value={name} onChange={this.onChange} placeholder="Meeting Name" type="text" /> &nbsp;
+                <Button variant="contained" color="primary" disabled={isInvalid} type="submit">Add Meeting</Button>
             </form>
         );
     }

@@ -5,6 +5,10 @@ import { withAuthorization } from '../Session';
 import { withRouter } from 'react-router-dom';
 import OrgList from '../OrgList';
 import * as ROUTES from '../../constants/routes';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import './landing.css';
+
 
 class Landing extends Component {
 
@@ -127,13 +131,11 @@ class Landing extends Component {
     }
 
     return (
-      <div>
-        <h1>GVSU Attendnace</h1>
-        <p>A better way to track attendance for your organization</p>
+      <div className="content-wrapper">
         <AddOrgForm />
-        <h1>My Orgs</h1>
+        <h1>My Organizations</h1>
         <OrgList orgList={myOrgs} remove={this.removeFromMyOrgs} link={this.goToMeetings} />
-        <h1>All Organizations</h1>
+        <h1>Other Organizations</h1>
         <OrgList orgList={filteredOrgs} add={this.addToMyOrgs} />
       </div>
 
@@ -178,8 +180,8 @@ class AddOrgFormBase extends Component {
 
     return (
       <form onSubmit={this.onSubmit}>
-        <input name="orgName" value={orgName} onChange={this.onChange} type="text" />
-        <button disabled={isInvalid} type="submit">Add Org</button>
+        <TextField name="orgName" value={orgName} onChange={this.onChange} type="text" placeholder="Organization Name" /> &nbsp;
+        <Button variant="contained" color="primary" disabled={isInvalid} type="submit">Add Org</Button>
       </form>
     );
   }
